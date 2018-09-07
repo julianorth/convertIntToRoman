@@ -25,28 +25,38 @@ function convertIntToRoman(int) {
 
   var resultRoman = "";
   var romanValue, arabicValue, differenceToLookup;
+  var substractionRest = int; // set to initial param
 
 
-  // loop through look up object
-  for (romanValue in romanValuesLookUpObj) {
+  // loop as long as there is a rest
+  while (substractionRest != 0) {
 
-    arabicValue = romanValuesLookUpObj[romanValue];
+    // loop through look up object
+    for (romanValue in romanValuesLookUpObj) {
 
-    // subtract current roman number from input number
-    differenceToLookup = int - arabicValue;
+      arabicValue = romanValuesLookUpObj[romanValue];
 
-    /*
-     * if differenceToLookup = 0, input number equals a number from lookup table
-     * if differenceToLookup > 0, no exact match found, take next smaller possible roman number
-     */
-    if (differenceToLookup >= 0) {
+      // subtract current roman number from input number
+      differenceToLookup = substractionRest - arabicValue;
 
-      resultRoman = romanValue;
-      break;
+      /*
+       * if differenceToLookup = 0, input number equals a number from lookup table
+       * if differenceToLookup > 0, no exact match found, take next smaller possible roman number
+       */
+      if (differenceToLookup >= 0) {
+
+        // gets smaller each round
+        substractionRest = differenceToLookup;
+
+        // add current matching letter to final string
+        resultRoman += romanValue;
+        break;
+      }
+
     }
 
   }
 
-
+  // return complete roman string
   return resultRoman;
 }
